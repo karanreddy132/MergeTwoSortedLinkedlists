@@ -10,69 +10,25 @@
  */
 class Solution {
 public:
-	ListNode *mergeTwoLists(ListNode *list1, ListNode *list2,ListNode *head = nullptr,ListNode *tmp = nullptr) {
-		if(list1==nullptr && list2==nullptr){
-            return head;
-        }
-        else if(list1==nullptr){
-            if(head==nullptr){
-                return list2;
-            }
-            else{
-                tmp->next = list2;
-                return head;
-            }
-        }
-        else if(list2==nullptr){
-            if(head==nullptr){
-                return list1;
-            }
-            else{
-                tmp->next = list1;
-                return head;
-            }
-        }
-        
-        if(head==nullptr){
+	ListNode *mergeTwoLists(ListNode *list1, ListNode *list2) {
+        ListNode *head = new ListNode(0);
+        ListNode *tmp = head;
+		while(list1 && list2){
             if(list1->val < list2->val){
-                head = new ListNode(list1->val);
-                tmp = head;
+                head->next = list1;
                 list1 = list1->next;
-            }
-            else if(list1->val > list2->val){
-                head = new ListNode(list2->val);
-                tmp = head;
-                list2 = list2->next;
             }
             else{
-                head = new ListNode(list1->val);
-                tmp = head;
-                tmp->next = new ListNode(list2->val);
-                tmp = tmp->next;
-                list1 = list1->next;
+                head->next = list2;
                 list2 = list2->next;
             }
+            head = head->next;
         }
-        else{
-            if(list1->val < list2->val){
-                tmp->next = new ListNode(list1->val);
-                tmp = tmp->next;
-                list1 = list1->next;
-            }
-            else if(list1->val > list2->val){
-                tmp->next = new ListNode(list2->val);
-                tmp = tmp->next;
-                list2 = list2->next;
-            }
-            else{
-                tmp->next = new ListNode(list1->val);
-                tmp = tmp->next;
-                tmp->next = new ListNode(list2->val);
-                tmp = tmp->next;
-                list1 = list1->next;
-                list2 = list2->next;
-            }
+        if(list1){
+            head->next = list1;
+        }else{
+            head->next = list2;
         }
-        return mergeTwoLists(list1,list2,head,tmp);
+        return tmp->next;
 	}
 };
